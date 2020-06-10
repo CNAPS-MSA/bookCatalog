@@ -1,0 +1,41 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.skcc.bookcatalog",
+      "nativeLanguage": "ko"
+    },
+    "jhipsterVersion": "6.9.1",
+    "applicationType": "microservice",
+    "baseName": "bookCatalog",
+    "packageName": "com.skcc.bookcatalog",
+    "packageFolder": "com/skcc/bookcatalog",
+    "serverPort": "8082",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": false,
+    "messageBroker": "kafka",
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MzQ5MmM1MjRjMGY1MDVmYTNlYzI4ODYwNmI0NTI5N2Y1N2VlNzE1ODg1ZDI2ZmY3NTJmNzdkNDI4ZjlhMjdkZmFjNTZlN2MyYzY0MDY1MDJhMDFiY2VkZGE0NGNiOWJjMDhiYTczOGFlMDMxZTNmZjBlZmNjNDQzYjkxZWY5OGY=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1591771069981,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "clientPackageManager": "npm",
+    "nativeLanguage": "ko",
+    "languages": ["ko", "en"],
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
