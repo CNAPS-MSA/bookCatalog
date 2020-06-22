@@ -22,6 +22,8 @@ public class BookCatalogDTO implements Serializable {
 
     private Boolean rented;
 
+    private Long rentCnt;
+
     
     public String getId() {
         return id;
@@ -79,6 +81,14 @@ public class BookCatalogDTO implements Serializable {
         this.rented = rented;
     }
 
+    public Long getRentCnt() {
+        return rentCnt;
+    }
+
+    public void setRentCnt(Long rentCnt) {
+        this.rentCnt = rentCnt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -107,6 +117,7 @@ public class BookCatalogDTO implements Serializable {
             ", publicationDate='" + getPublicationDate() + "'" +
             ", classification='" + getClassification() + "'" +
             ", rented='" + isRented() + "'" +
+            ", rentCnt=" + getRentCnt() +
             "}";
     }
 }

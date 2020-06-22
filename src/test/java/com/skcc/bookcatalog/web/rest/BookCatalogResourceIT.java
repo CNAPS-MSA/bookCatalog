@@ -51,6 +51,9 @@ public class BookCatalogResourceIT {
     private static final Boolean DEFAULT_RENTED = false;
     private static final Boolean UPDATED_RENTED = true;
 
+    private static final Long DEFAULT_RENT_CNT = 1L;
+    private static final Long UPDATED_RENT_CNT = 2L;
+
     @Autowired
     private BookCatalogRepository bookCatalogRepository;
 
@@ -78,7 +81,8 @@ public class BookCatalogResourceIT {
             .author(DEFAULT_AUTHOR)
             .publicationDate(DEFAULT_PUBLICATION_DATE)
             .classification(DEFAULT_CLASSIFICATION)
-            .rented(DEFAULT_RENTED);
+            .rented(DEFAULT_RENTED)
+            .rentCnt(DEFAULT_RENT_CNT);
         return bookCatalog;
     }
     /**
@@ -94,7 +98,8 @@ public class BookCatalogResourceIT {
             .author(UPDATED_AUTHOR)
             .publicationDate(UPDATED_PUBLICATION_DATE)
             .classification(UPDATED_CLASSIFICATION)
-            .rented(UPDATED_RENTED);
+            .rented(UPDATED_RENTED)
+            .rentCnt(UPDATED_RENT_CNT);
         return bookCatalog;
     }
 
@@ -124,6 +129,7 @@ public class BookCatalogResourceIT {
         assertThat(testBookCatalog.getPublicationDate()).isEqualTo(DEFAULT_PUBLICATION_DATE);
         assertThat(testBookCatalog.getClassification()).isEqualTo(DEFAULT_CLASSIFICATION);
         assertThat(testBookCatalog.isRented()).isEqualTo(DEFAULT_RENTED);
+        assertThat(testBookCatalog.getRentCnt()).isEqualTo(DEFAULT_RENT_CNT);
     }
 
     @Test
@@ -161,7 +167,8 @@ public class BookCatalogResourceIT {
             .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR)))
             .andExpect(jsonPath("$.[*].publicationDate").value(hasItem(DEFAULT_PUBLICATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].classification").value(hasItem(DEFAULT_CLASSIFICATION)))
-            .andExpect(jsonPath("$.[*].rented").value(hasItem(DEFAULT_RENTED.booleanValue())));
+            .andExpect(jsonPath("$.[*].rented").value(hasItem(DEFAULT_RENTED.booleanValue())))
+            .andExpect(jsonPath("$.[*].rentCnt").value(hasItem(DEFAULT_RENT_CNT.intValue())));
     }
     
     @Test
@@ -179,7 +186,8 @@ public class BookCatalogResourceIT {
             .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR))
             .andExpect(jsonPath("$.publicationDate").value(DEFAULT_PUBLICATION_DATE.toString()))
             .andExpect(jsonPath("$.classification").value(DEFAULT_CLASSIFICATION))
-            .andExpect(jsonPath("$.rented").value(DEFAULT_RENTED.booleanValue()));
+            .andExpect(jsonPath("$.rented").value(DEFAULT_RENTED.booleanValue()))
+            .andExpect(jsonPath("$.rentCnt").value(DEFAULT_RENT_CNT.intValue()));
     }
     @Test
     public void getNonExistingBookCatalog() throws Exception {
@@ -203,7 +211,8 @@ public class BookCatalogResourceIT {
             .author(UPDATED_AUTHOR)
             .publicationDate(UPDATED_PUBLICATION_DATE)
             .classification(UPDATED_CLASSIFICATION)
-            .rented(UPDATED_RENTED);
+            .rented(UPDATED_RENTED)
+            .rentCnt(UPDATED_RENT_CNT);
         BookCatalogDTO bookCatalogDTO = bookCatalogMapper.toDto(updatedBookCatalog);
 
         restBookCatalogMockMvc.perform(put("/api/book-catalogs")
@@ -221,6 +230,7 @@ public class BookCatalogResourceIT {
         assertThat(testBookCatalog.getPublicationDate()).isEqualTo(UPDATED_PUBLICATION_DATE);
         assertThat(testBookCatalog.getClassification()).isEqualTo(UPDATED_CLASSIFICATION);
         assertThat(testBookCatalog.isRented()).isEqualTo(UPDATED_RENTED);
+        assertThat(testBookCatalog.getRentCnt()).isEqualTo(UPDATED_RENT_CNT);
     }
 
     @Test
