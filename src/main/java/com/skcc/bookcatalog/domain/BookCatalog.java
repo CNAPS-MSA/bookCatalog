@@ -1,8 +1,15 @@
 package com.skcc.bookcatalog.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -35,6 +42,9 @@ public class BookCatalog implements Serializable {
 
     @Field("rented")
     private Boolean rented;
+
+    @Field("rent_cnt")
+    private Long rentCnt;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public String getId() {
@@ -122,6 +132,19 @@ public class BookCatalog implements Serializable {
     public void setRented(Boolean rented) {
         this.rented = rented;
     }
+
+    public Long getRentCnt() {
+        return rentCnt;
+    }
+
+    public BookCatalog rentCnt(Long rentCnt) {
+        this.rentCnt = rentCnt;
+        return this;
+    }
+
+    public void setRentCnt(Long rentCnt) {
+        this.rentCnt = rentCnt;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -151,6 +174,7 @@ public class BookCatalog implements Serializable {
             ", publicationDate='" + getPublicationDate() + "'" +
             ", classification='" + getClassification() + "'" +
             ", rented='" + isRented() + "'" +
+            ", rentCnt=" + getRentCnt() +
             "}";
     }
 }

@@ -26,6 +26,10 @@
     {
       "fieldName": "rented",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "rentCnt",
+      "fieldType": "Long"
     }
   ],
   "dto": "mapstruct",
