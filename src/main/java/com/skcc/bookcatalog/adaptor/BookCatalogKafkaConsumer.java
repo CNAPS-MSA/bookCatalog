@@ -85,6 +85,26 @@ public class BookCatalogKafkaConsumer {
                                 bookCatalogRepository.save(bookCatalog);
                             }else if(eventType.equals("DELETE_BOOK")){
                                 bookCatalogRepository.deleteByTitle(bookCatalogEvent.getTitle());
+                            }else if(eventType.equals("RENT_BOOK")){
+                                BookCatalog bookCatalog = bookCatalogRepository.findByTitle(bookCatalogEvent.getTitle());
+                                Long newCnt = bookCatalog.getRentCnt()+(long)1;
+                                bookCatalog.setRentCnt(newCnt);
+                                bookCatalog.setRented(true);
+                                bookCatalogRepository.save(bookCatalog);
+                            }else if(eventType.equals("RETURN_BOOK")){
+                                BookCatalog bookCatalog = bookCatalogRepository.findByTitle(bookCatalogEvent.getTitle());
+                                bookCatalog.setRented(false);
+                                bookCatalogRepository.save(bookCatalog);
+                            }else if(eventType.equals("UPDATE_BOOK")){
+                                BookCatalog bookCatalog = bookCatalogRepository.findByTitle(bookCatalogEvent.getTitle());
+                                bookCatalog.setAuthor(bookCatalogEvent.getAuthor());
+                                bookCatalog.setClassification(bookCatalogEvent.getClassification());
+                                bookCatalog.setDescription(bookCatalogEvent.getDescription());
+                                bookCatalog.setPublicationDate(LocalDate.parse(bookCatalogEvent.getPublicationDate(), fmt));
+                                bookCatalog.setRented(bookCatalogEvent.getRented());
+                                bookCatalog.setTitle(bookCatalogEvent.getTitle());
+                                bookCatalog.setRentCnt(bookCatalogEvent.getRentCnt());
+                                bookCatalogRepository.save(bookCatalog);
                             }
 
 
