@@ -1,8 +1,8 @@
-package com.skcc.bookcatalog.service.mapper;
+package com.skcc.bookcatalog.web.rest.mapper;
 
 
 import com.skcc.bookcatalog.domain.*;
-import com.skcc.bookcatalog.service.dto.TopListBooksDTO;
+import com.skcc.bookcatalog.web.rest.dto.TopListBooksDTO;
 
 import org.mapstruct.*;
 

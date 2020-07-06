@@ -4,8 +4,8 @@ import com.skcc.bookcatalog.BookCatalogApp;
 import com.skcc.bookcatalog.domain.TopListBooks;
 import com.skcc.bookcatalog.repository.TopListBooksRepository;
 import com.skcc.bookcatalog.service.TopListBooksService;
-import com.skcc.bookcatalog.service.dto.TopListBooksDTO;
-import com.skcc.bookcatalog.service.mapper.TopListBooksMapper;
+import com.skcc.bookcatalog.web.rest.dto.TopListBooksDTO;
+import com.skcc.bookcatalog.web.rest.mapper.TopListBooksMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -147,7 +147,7 @@ public class TopListBooksResourceIT {
             .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR)))
             .andExpect(jsonPath("$.[*].publisher").value(hasItem(DEFAULT_PUBLISHER)));
     }
-    
+
     @Test
     public void getTopListBooks() throws Exception {
         // Initialize the database

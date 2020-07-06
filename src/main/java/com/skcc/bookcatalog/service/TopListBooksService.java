@@ -1,6 +1,6 @@
 package com.skcc.bookcatalog.service;
 
-import com.skcc.bookcatalog.service.dto.TopListBooksDTO;
+import com.skcc.bookcatalog.web.rest.dto.TopListBooksDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

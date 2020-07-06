@@ -1,5 +1,6 @@
 package com.skcc.bookcatalog.service.dto;
 
+import com.skcc.bookcatalog.web.rest.dto.TopListBooksDTO;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import com.skcc.bookcatalog.web.rest.TestUtil;

@@ -3,8 +3,8 @@ package com.skcc.bookcatalog.service.impl;
 import com.skcc.bookcatalog.service.BookCatalogService;
 import com.skcc.bookcatalog.domain.BookCatalog;
 import com.skcc.bookcatalog.repository.BookCatalogRepository;
-import com.skcc.bookcatalog.service.dto.BookCatalogDTO;
-import com.skcc.bookcatalog.service.mapper.BookCatalogMapper;
+import com.skcc.bookcatalog.web.rest.dto.BookCatalogDTO;
+import com.skcc.bookcatalog.web.rest.mapper.BookCatalogMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
