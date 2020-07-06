@@ -1,15 +1,11 @@
 package com.skcc.bookcatalog.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -18,6 +14,8 @@ import java.time.LocalDate;
  * A BookCatalog.
  */
 @Document(collection = "book_catalog")
+@Data
+@ToString
 public class BookCatalog implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,79 +44,41 @@ public class BookCatalog implements Serializable {
     @Field("rent_cnt")
     private Long rentCnt;
 
+    @Field("book_id")
+    private Long bookId;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
 
     public BookCatalog title(String title) {
         this.title = title;
         return this;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 
     public BookCatalog description(String description) {
         this.description = description;
         return this;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
 
     public BookCatalog author(String author) {
         this.author = author;
         return this;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public LocalDate getPublicationDate() {
-        return publicationDate;
-    }
 
     public BookCatalog publicationDate(LocalDate publicationDate) {
         this.publicationDate = publicationDate;
         return this;
     }
 
-    public void setPublicationDate(LocalDate publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public String getClassification() {
-        return classification;
-    }
 
     public BookCatalog classification(String classification) {
         this.classification = classification;
         return this;
     }
 
-    public void setClassification(String classification) {
-        this.classification = classification;
-    }
+
 
     public Boolean isRented() {
         return rented;
@@ -129,22 +89,19 @@ public class BookCatalog implements Serializable {
         return this;
     }
 
-    public void setRented(Boolean rented) {
-        this.rented = rented;
-    }
-
-    public Long getRentCnt() {
-        return rentCnt;
-    }
 
     public BookCatalog rentCnt(Long rentCnt) {
         this.rentCnt = rentCnt;
         return this;
     }
 
-    public void setRentCnt(Long rentCnt) {
-        this.rentCnt = rentCnt;
+
+    public BookCatalog bookId(Long bookId) {
+        this.bookId = bookId;
+        return this;
     }
+
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -163,18 +120,4 @@ public class BookCatalog implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "BookCatalog{" +
-            "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", author='" + getAuthor() + "'" +
-            ", publicationDate='" + getPublicationDate() + "'" +
-            ", classification='" + getClassification() + "'" +
-            ", rented='" + isRented() + "'" +
-            ", rentCnt=" + getRentCnt() +
-            "}";
-    }
 }

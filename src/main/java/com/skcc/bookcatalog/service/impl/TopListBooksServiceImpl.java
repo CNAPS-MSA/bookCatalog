@@ -3,8 +3,8 @@ package com.skcc.bookcatalog.service.impl;
 import com.skcc.bookcatalog.service.TopListBooksService;
 import com.skcc.bookcatalog.domain.TopListBooks;
 import com.skcc.bookcatalog.repository.TopListBooksRepository;
-import com.skcc.bookcatalog.service.dto.TopListBooksDTO;
-import com.skcc.bookcatalog.service.mapper.TopListBooksMapper;
+import com.skcc.bookcatalog.web.rest.dto.TopListBooksDTO;
+import com.skcc.bookcatalog.web.rest.mapper.TopListBooksMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

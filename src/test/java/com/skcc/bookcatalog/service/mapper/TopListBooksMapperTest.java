@@ -1,5 +1,7 @@
 package com.skcc.bookcatalog.service.mapper;
 
+import com.skcc.bookcatalog.web.rest.mapper.TopListBooksMapper;
+import com.skcc.bookcatalog.web.rest.mapper.TopListBooksMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -30,6 +30,10 @@
     {
       "fieldName": "rentCnt",
       "fieldType": "Long"
+    },
+    {
+      "fieldName": "bookId",
+      "fieldType": "Long"
     }
   ],
   "dto": "mapstruct",

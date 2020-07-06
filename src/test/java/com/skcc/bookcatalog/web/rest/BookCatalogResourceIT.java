@@ -4,8 +4,8 @@ import com.skcc.bookcatalog.BookCatalogApp;
 import com.skcc.bookcatalog.domain.BookCatalog;
 import com.skcc.bookcatalog.repository.BookCatalogRepository;
 import com.skcc.bookcatalog.service.BookCatalogService;
-import com.skcc.bookcatalog.service.dto.BookCatalogDTO;
-import com.skcc.bookcatalog.service.mapper.BookCatalogMapper;
+import com.skcc.bookcatalog.web.rest.dto.BookCatalogDTO;
+import com.skcc.bookcatalog.web.rest.mapper.BookCatalogMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,6 +54,9 @@ public class BookCatalogResourceIT {
     private static final Long DEFAULT_RENT_CNT = 1L;
     private static final Long UPDATED_RENT_CNT = 2L;
 
+    private static final Long DEFAULT_BOOK_ID = 1L;
+    private static final Long UPDATED_BOOK_ID = 2L;
+
     @Autowired
     private BookCatalogRepository bookCatalogRepository;
 
@@ -82,7 +85,8 @@ public class BookCatalogResourceIT {
             .publicationDate(DEFAULT_PUBLICATION_DATE)
             .classification(DEFAULT_CLASSIFICATION)
             .rented(DEFAULT_RENTED)
-            .rentCnt(DEFAULT_RENT_CNT);
+            .rentCnt(DEFAULT_RENT_CNT)
+            .bookId(DEFAULT_BOOK_ID);
         return bookCatalog;
     }
     /**
@@ -99,7 +103,8 @@ public class BookCatalogResourceIT {
             .publicationDate(UPDATED_PUBLICATION_DATE)
             .classification(UPDATED_CLASSIFICATION)
             .rented(UPDATED_RENTED)
-            .rentCnt(UPDATED_RENT_CNT);
+            .rentCnt(UPDATED_RENT_CNT)
+            .bookId(UPDATED_BOOK_ID);
         return bookCatalog;
     }
 
@@ -130,6 +135,7 @@ public class BookCatalogResourceIT {
         assertThat(testBookCatalog.getClassification()).isEqualTo(DEFAULT_CLASSIFICATION);
         assertThat(testBookCatalog.isRented()).isEqualTo(DEFAULT_RENTED);
         assertThat(testBookCatalog.getRentCnt()).isEqualTo(DEFAULT_RENT_CNT);
+        assertThat(testBookCatalog.getBookId()).isEqualTo(DEFAULT_BOOK_ID);
     }
 
     @Test
@@ -168,9 +174,10 @@ public class BookCatalogResourceIT {
             .andExpect(jsonPath("$.[*].publicationDate").value(hasItem(DEFAULT_PUBLICATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].classification").value(hasItem(DEFAULT_CLASSIFICATION)))
             .andExpect(jsonPath("$.[*].rented").value(hasItem(DEFAULT_RENTED.booleanValue())))
-            .andExpect(jsonPath("$.[*].rentCnt").value(hasItem(DEFAULT_RENT_CNT.intValue())));
+            .andExpect(jsonPath("$.[*].rentCnt").value(hasItem(DEFAULT_RENT_CNT.intValue())))
+            .andExpect(jsonPath("$.[*].bookId").value(hasItem(DEFAULT_BOOK_ID.intValue())));
     }
-    
+
     @Test
     public void getBookCatalog() throws Exception {
         // Initialize the database
@@ -187,7 +194,8 @@ public class BookCatalogResourceIT {
             .andExpect(jsonPath("$.publicationDate").value(DEFAULT_PUBLICATION_DATE.toString()))
             .andExpect(jsonPath("$.classification").value(DEFAULT_CLASSIFICATION))
             .andExpect(jsonPath("$.rented").value(DEFAULT_RENTED.booleanValue()))
-            .andExpect(jsonPath("$.rentCnt").value(DEFAULT_RENT_CNT.intValue()));
+            .andExpect(jsonPath("$.rentCnt").value(DEFAULT_RENT_CNT.intValue()))
+            .andExpect(jsonPath("$.bookId").value(DEFAULT_BOOK_ID.intValue()));
     }
     @Test
     public void getNonExistingBookCatalog() throws Exception {
@@ -212,7 +220,8 @@ public class BookCatalogResourceIT {
             .publicationDate(UPDATED_PUBLICATION_DATE)
             .classification(UPDATED_CLASSIFICATION)
             .rented(UPDATED_RENTED)
-            .rentCnt(UPDATED_RENT_CNT);
+            .rentCnt(UPDATED_RENT_CNT)
+            .bookId(UPDATED_BOOK_ID);
         BookCatalogDTO bookCatalogDTO = bookCatalogMapper.toDto(updatedBookCatalog);
 
         restBookCatalogMockMvc.perform(put("/api/book-catalogs")
@@ -231,6 +240,7 @@ public class BookCatalogResourceIT {
         assertThat(testBookCatalog.getClassification()).isEqualTo(UPDATED_CLASSIFICATION);
         assertThat(testBookCatalog.isRented()).isEqualTo(UPDATED_RENTED);
         assertThat(testBookCatalog.getRentCnt()).isEqualTo(UPDATED_RENT_CNT);
+        assertThat(testBookCatalog.getBookId()).isEqualTo(UPDATED_BOOK_ID);
     }
 
     @Test

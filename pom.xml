@@ -70,6 +70,7 @@
         <junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
         <!-- jhipster-needle-maven-property -->
+        <lombok.version>1.18.12</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -298,6 +299,11 @@
             <artifactId>metrics-core</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -412,6 +418,11 @@
                                 <version>${mapstruct.version}</version>
                             </path>
                             <!-- jhipster-needle-maven-add-annotation-processor -->
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
                         </annotationProcessorPaths>
                     </configuration>
                 </plugin>
