@@ -4,6 +4,7 @@ import com.skcc.bookcatalog.service.BookCatalogService;
 import com.skcc.bookcatalog.web.rest.errors.BadRequestAlertException;
 import com.skcc.bookcatalog.web.rest.dto.BookCatalogDTO;
 
+import com.skcc.bookcatalog.web.rest.mapper.BookCatalogMapper;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -37,9 +38,10 @@ public class BookCatalogResource {
     private String applicationName;
 
     private final BookCatalogService bookCatalogService;
-
-    public BookCatalogResource(BookCatalogService bookCatalogService) {
+    private final BookCatalogMapper bookCatalogMapper;
+    public BookCatalogResource(BookCatalogService bookCatalogService, BookCatalogMapper bookCatalogMapper) {
         this.bookCatalogService = bookCatalogService;
+        this.bookCatalogMapper = bookCatalogMapper;
     }
 
     /**
@@ -120,5 +122,12 @@ public class BookCatalogResource {
         log.debug("REST request to delete BookCatalog : {}", id);
         bookCatalogService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
+    }
+
+    @GetMapping("/book-catalogs/title/{title}")
+    public ResponseEntity<BookCatalogDTO> getBookByTitle(@PathVariable String title){
+        log.debug("REST request to get BookCatalog : {}", title);
+        BookCatalogDTO bookCatalogDTO = bookCatalogMapper.toDto(bookCatalogService.findBookByTitle(title));
+        return ResponseEntity.ok().body(bookCatalogDTO);
     }
 }
