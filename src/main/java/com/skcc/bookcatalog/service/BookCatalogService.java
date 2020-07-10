@@ -1,5 +1,6 @@
 package com.skcc.bookcatalog.service;
 
+import com.skcc.bookcatalog.domain.BookCatalog;
 import com.skcc.bookcatalog.web.rest.dto.BookCatalogDTO;
 
 import org.springframework.data.domain.Page;
@@ -43,4 +44,6 @@ public interface BookCatalogService {
      * @param id the id of the entity.
      */
     void delete(String id);
+
+    BookCatalog findBookByTitle(String title);
 }

@@ -82,4 +82,9 @@ public class BookCatalogServiceImpl implements BookCatalogService {
         log.debug("Request to delete BookCatalog : {}", id);
         bookCatalogRepository.deleteById(id);
     }
+
+    @Override
+    public BookCatalog findBookByTitle(String title) {
+        return bookCatalogRepository.findByTitle(title);
+    }
 }
