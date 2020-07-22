@@ -1,5 +1,6 @@
 package com.skcc.bookcatalog.service.impl;
 
+import com.skcc.bookcatalog.domain.CatalogChanged;
 import com.skcc.bookcatalog.service.BookCatalogService;
 import com.skcc.bookcatalog.domain.BookCatalog;
 import com.skcc.bookcatalog.repository.BookCatalogRepository;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 /**
@@ -25,6 +28,7 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     private final BookCatalogRepository bookCatalogRepository;
 
     private final BookCatalogMapper bookCatalogMapper;
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public BookCatalogServiceImpl(BookCatalogRepository bookCatalogRepository, BookCatalogMapper bookCatalogMapper) {
         this.bookCatalogRepository = bookCatalogRepository;
@@ -84,7 +88,80 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     }
 
     @Override
-    public BookCatalog findBookByTitle(String title) {
-        return bookCatalogRepository.findByTitle(title);
+    public Page<BookCatalogDTO> findBookByTitle(String title, Pageable pageable)
+    {
+        return bookCatalogRepository.findByTitleLike(title, pageable).map(bookCatalogMapper::toDto);
+    }
+
+    @Override
+    public BookCatalog registerNewBook(CatalogChanged catalogChanged) {
+        System.out.println("register new book");
+        BookCatalog bookCatalog = new BookCatalog();
+        bookCatalog.setBookId(catalogChanged.getBookId());
+        bookCatalog.setAuthor(catalogChanged.getAuthor());
+        bookCatalog.setClassification(catalogChanged.getClassification());
+        bookCatalog.setDescription(catalogChanged.getDescription());
+        bookCatalog.setPublicationDate(LocalDate.parse(catalogChanged.getPublicationDate(), fmt));
+        bookCatalog.setRented(catalogChanged.getRented());
+        bookCatalog.setTitle(catalogChanged.getTitle());
+        bookCatalog.setRentCnt(catalogChanged.getRentCnt());
+        bookCatalog= bookCatalogRepository.save(bookCatalog);
+        return bookCatalog;
+    }
+
+    @Override
+    public void deleteBook(CatalogChanged catalogChanged) {
+        bookCatalogRepository.deleteByBookId(catalogChanged.getBookId());
+    }
+
+    @Override
+    public BookCatalog updateBookStatus(CatalogChanged catalogChanged) {
+        BookCatalog bookCatalog = bookCatalogRepository.findByBookId(catalogChanged.getBookId());
+        if(catalogChanged.getEventType().equals("RENT_BOOK")) {
+            Long newCnt = bookCatalog.getRentCnt() + (long) 1;
+            bookCatalog.setRentCnt(newCnt);
+            bookCatalog.setRented(true);
+            bookCatalog= bookCatalogRepository.save(bookCatalog);
+        }else if(catalogChanged.getEventType().equals("RETURN_BOOK")){
+            bookCatalog.setRented(false);
+            bookCatalog= bookCatalogRepository.save(bookCatalog);
+
+        }
+        return bookCatalog;
+
+    }
+
+    @Override
+    public BookCatalog updateBookInfo(CatalogChanged catalogChanged) {
+        BookCatalog bookCatalog = bookCatalogRepository.findByBookId(catalogChanged.getBookId());
+        bookCatalog.setAuthor(catalogChanged.getAuthor());
+        bookCatalog.setClassification(catalogChanged.getClassification());
+        bookCatalog.setDescription(catalogChanged.getDescription());
+        bookCatalog.setPublicationDate(LocalDate.parse(catalogChanged.getPublicationDate(), fmt));
+        bookCatalog.setRented(catalogChanged.getRented());
+        bookCatalog.setTitle(catalogChanged.getTitle());
+        bookCatalog.setRentCnt(catalogChanged.getRentCnt());
+        bookCatalogRepository.save(bookCatalog);
+        return bookCatalog;
+    }
+
+    @Override
+    public void processCatalogChanged(CatalogChanged catalogChanged) {
+        String eventType  = catalogChanged.getEventType();
+        switch (eventType) {
+            case "NEW_BOOK":
+               registerNewBook(catalogChanged);
+                break;
+            case "DELETE_BOOK":
+                deleteBook(catalogChanged);
+                break;
+            case "RENT_BOOK":
+            case "RETURN_BOOK":
+                updateBookStatus(catalogChanged);
+                break;
+            case "UPDATE_BOOK":
+                updateBookInfo(catalogChanged);
+                break;
+        }
     }
 }

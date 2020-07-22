@@ -1,5 +1,6 @@
 package com.skcc.bookcatalog.web.rest;
 
+import com.skcc.bookcatalog.domain.BookCatalog;
 import com.skcc.bookcatalog.service.BookCatalogService;
 import com.skcc.bookcatalog.web.rest.errors.BadRequestAlertException;
 import com.skcc.bookcatalog.web.rest.dto.BookCatalogDTO;
@@ -125,9 +126,11 @@ public class BookCatalogResource {
     }
 
     @GetMapping("/book-catalogs/title/{title}")
-    public ResponseEntity<BookCatalogDTO> getBookByTitle(@PathVariable String title){
+    public ResponseEntity<List<BookCatalogDTO>> getBookByTitle(@PathVariable String title, Pageable pageable){
         log.debug("REST request to get BookCatalog : {}", title);
-        BookCatalogDTO bookCatalogDTO = bookCatalogMapper.toDto(bookCatalogService.findBookByTitle(title));
-        return ResponseEntity.ok().body(bookCatalogDTO);
+        Page<BookCatalogDTO> page = bookCatalogService.findBookByTitle(title, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
 }
