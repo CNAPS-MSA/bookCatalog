@@ -2,6 +2,8 @@ package com.skcc.bookcatalog.repository;
 
 import com.skcc.bookcatalog.domain.BookCatalog;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface BookCatalogRepository extends MongoRepository<BookCatalog, String> {
-    BookCatalog findByTitle(String title);
+    Page<BookCatalog> findByTitleLike(String title, Pageable pageable);
 
     BookCatalog findByBookId(Long bookId);
 

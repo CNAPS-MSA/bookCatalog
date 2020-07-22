@@ -1,6 +1,7 @@
 package com.skcc.bookcatalog.service;
 
 import com.skcc.bookcatalog.domain.BookCatalog;
+import com.skcc.bookcatalog.domain.CatalogChanged;
 import com.skcc.bookcatalog.web.rest.dto.BookCatalogDTO;
 
 import org.springframework.data.domain.Page;
@@ -45,5 +46,12 @@ public interface BookCatalogService {
      */
     void delete(String id);
 
-    BookCatalog findBookByTitle(String title);
+    Page<BookCatalogDTO> findBookByTitle(String title, Pageable pageable);
+
+    BookCatalog registerNewBook(CatalogChanged catalogChanged);
+    void deleteBook(CatalogChanged catalogChanged);
+    BookCatalog updateBookStatus(CatalogChanged catalogChanged);
+    BookCatalog updateBookInfo(CatalogChanged catalogChanged);
+
+    void processCatalogChanged(CatalogChanged catalogChanged);
 }
