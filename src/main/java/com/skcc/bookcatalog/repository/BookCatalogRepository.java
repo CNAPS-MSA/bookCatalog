@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface BookCatalogRepository extends MongoRepository<BookCatalog, String> {
-    Page<BookCatalog> findByTitleLike(String title, Pageable pageable);
+    Page<BookCatalog> findByTitleContaining(String title, Pageable pageable);
 
     BookCatalog findByBookId(Long bookId);
 

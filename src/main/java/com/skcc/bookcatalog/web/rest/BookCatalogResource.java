@@ -129,8 +129,8 @@ public class BookCatalogResource {
     public ResponseEntity<List<BookCatalogDTO>> getBookByTitle(@PathVariable String title, Pageable pageable){
         log.debug("REST request to get BookCatalog : {}", title);
         Page<BookCatalogDTO> page = bookCatalogService.findBookByTitle(title, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+      //  HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page.getContent());
     }
 
 }

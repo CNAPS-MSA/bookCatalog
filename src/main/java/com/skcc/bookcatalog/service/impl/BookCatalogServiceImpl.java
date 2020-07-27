@@ -90,7 +90,7 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     @Override
     public Page<BookCatalogDTO> findBookByTitle(String title, Pageable pageable)
     {
-        return bookCatalogRepository.findByTitleLike(title, pageable).map(bookCatalogMapper::toDto);
+        return bookCatalogRepository.findByTitleContaining(title, pageable).map(bookCatalogMapper::toDto);
     }
 
     @Override
