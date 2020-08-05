@@ -7,6 +7,7 @@ import com.skcc.bookcatalog.web.rest.dto.BookCatalogDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -54,4 +55,6 @@ public interface BookCatalogService {
     BookCatalog updateBookInfo(CatalogChanged catalogChanged);
 
     void processCatalogChanged(CatalogChanged catalogChanged);
+
+    List<BookCatalog> loadTop10();
 }

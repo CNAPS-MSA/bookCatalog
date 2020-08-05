@@ -133,4 +133,10 @@ public class BookCatalogResource {
         return ResponseEntity.ok().body(page.getContent());
     }
 
+    @GetMapping("/book-catalogs/top-10")
+    public ResponseEntity<List<BookCatalog>> loadTop10Books(){
+        List<BookCatalog> bookCatalogs = bookCatalogService.loadTop10();
+        return ResponseEntity.ok().body(bookCatalogs);
+    }
+
 }

@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Spring Data MongoDB repository for the BookCatalog entity.
  */
@@ -19,4 +21,6 @@ public interface BookCatalogRepository extends MongoRepository<BookCatalog, Stri
     BookCatalog findByBookId(Long bookId);
 
     void deleteByBookId(Long bookId);
+
+    List<BookCatalog> findTop10ByOrderByRentCntDesc();
 }
