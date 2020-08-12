@@ -39,15 +39,14 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     /**
      * Save a bookCatalog.
      *
-     * @param bookCatalogDTO the entity to save.
+     * @param bookCatalog the entity to save.
      * @return the persisted entity.
      */
     @Override
-    public BookCatalogDTO save(BookCatalogDTO bookCatalogDTO) {
-        log.debug("Request to save BookCatalog : {}", bookCatalogDTO);
-        BookCatalog bookCatalog = bookCatalogMapper.toEntity(bookCatalogDTO);
-        bookCatalog = bookCatalogRepository.save(bookCatalog);
-        return bookCatalogMapper.toDto(bookCatalog);
+    public BookCatalog save(BookCatalog bookCatalog) {
+        log.debug("Request to save BookCatalog : {}", bookCatalog);
+        return bookCatalogRepository.save(bookCatalog);
+
     }
 
     /**
@@ -57,10 +56,9 @@ public class BookCatalogServiceImpl implements BookCatalogService {
      * @return the list of entities.
      */
     @Override
-    public Page<BookCatalogDTO> findAll(Pageable pageable) {
+    public Page<BookCatalog> findAll(Pageable pageable) {
         log.debug("Request to get all BookCatalogs");
-        return bookCatalogRepository.findAll(pageable)
-            .map(bookCatalogMapper::toDto);
+        return bookCatalogRepository.findAll(pageable);
     }
 
 
@@ -71,10 +69,9 @@ public class BookCatalogServiceImpl implements BookCatalogService {
      * @return the entity.
      */
     @Override
-    public Optional<BookCatalogDTO> findOne(String id) {
+    public Optional<BookCatalog> findOne(String id) {
         log.debug("Request to get BookCatalog : {}", id);
-        return bookCatalogRepository.findById(id)
-            .map(bookCatalogMapper::toDto);
+        return bookCatalogRepository.findById(id);
     }
 
     /**
@@ -89,9 +86,9 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     }
 
     @Override
-    public Page<BookCatalogDTO> findBookByTitle(String title, Pageable pageable)
+    public Page<BookCatalog> findBookByTitle(String title, Pageable pageable)
     {
-        return bookCatalogRepository.findByTitleContaining(title, pageable).map(bookCatalogMapper::toDto);
+        return bookCatalogRepository.findByTitleContaining(title, pageable);
     }
 
     @Override

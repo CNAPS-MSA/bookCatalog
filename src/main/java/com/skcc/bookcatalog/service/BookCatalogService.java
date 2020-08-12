@@ -18,10 +18,10 @@ public interface BookCatalogService {
     /**
      * Save a bookCatalog.
      *
-     * @param bookCatalogDTO the entity to save.
+     * @param bookCatalog the entity to save.
      * @return the persisted entity.
      */
-    BookCatalogDTO save(BookCatalogDTO bookCatalogDTO);
+    BookCatalog save(BookCatalog bookCatalog);
 
     /**
      * Get all the bookCatalogs.
@@ -29,7 +29,7 @@ public interface BookCatalogService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<BookCatalogDTO> findAll(Pageable pageable);
+    Page<BookCatalog> findAll(Pageable pageable);
 
 
     /**
@@ -38,7 +38,7 @@ public interface BookCatalogService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<BookCatalogDTO> findOne(String id);
+    Optional<BookCatalog> findOne(String id);
 
     /**
      * Delete the "id" bookCatalog.
@@ -47,7 +47,7 @@ public interface BookCatalogService {
      */
     void delete(String id);
 
-    Page<BookCatalogDTO> findBookByTitle(String title, Pageable pageable);
+    Page<BookCatalog> findBookByTitle(String title, Pageable pageable);
 
     BookCatalog registerNewBook(CatalogChanged catalogChanged);
     void deleteBook(CatalogChanged catalogChanged);
