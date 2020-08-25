@@ -1,10 +1,9 @@
 package com.skcc.bookcatalog.service.impl;
 
-import com.skcc.bookcatalog.domain.CatalogChanged;
+import com.skcc.bookcatalog.domain.BookChanged;
 import com.skcc.bookcatalog.service.BookCatalogService;
 import com.skcc.bookcatalog.domain.BookCatalog;
 import com.skcc.bookcatalog.repository.BookCatalogRepository;
-import com.skcc.bookcatalog.web.rest.dto.BookCatalogDTO;
 import com.skcc.bookcatalog.web.rest.mapper.BookCatalogMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,35 +91,35 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     }
 
     @Override
-    public BookCatalog registerNewBook(CatalogChanged catalogChanged) {
+    public BookCatalog registerNewBook(BookChanged bookChanged) {
         System.out.println("register new book");
         BookCatalog bookCatalog = new BookCatalog();
-        bookCatalog.setBookId(catalogChanged.getBookId());
-        bookCatalog.setAuthor(catalogChanged.getAuthor());
-        bookCatalog.setClassification(catalogChanged.getClassification());
-        bookCatalog.setDescription(catalogChanged.getDescription());
-        bookCatalog.setPublicationDate(LocalDate.parse(catalogChanged.getPublicationDate(), fmt));
-        bookCatalog.setRented(catalogChanged.getRented());
-        bookCatalog.setTitle(catalogChanged.getTitle());
-        bookCatalog.setRentCnt(catalogChanged.getRentCnt());
+        bookCatalog.setBookId(bookChanged.getBookId());
+        bookCatalog.setAuthor(bookChanged.getAuthor());
+        bookCatalog.setClassification(bookChanged.getClassification());
+        bookCatalog.setDescription(bookChanged.getDescription());
+        bookCatalog.setPublicationDate(LocalDate.parse(bookChanged.getPublicationDate(), fmt));
+        bookCatalog.setRented(bookChanged.getRented());
+        bookCatalog.setTitle(bookChanged.getTitle());
+        bookCatalog.setRentCnt(bookChanged.getRentCnt());
         bookCatalog= bookCatalogRepository.save(bookCatalog);
         return bookCatalog;
     }
 
     @Override
-    public void deleteBook(CatalogChanged catalogChanged) {
-        bookCatalogRepository.deleteByBookId(catalogChanged.getBookId());
+    public void deleteBook(BookChanged bookChanged) {
+        bookCatalogRepository.deleteByBookId(bookChanged.getBookId());
     }
 
     @Override
-    public BookCatalog updateBookStatus(CatalogChanged catalogChanged) {
-        BookCatalog bookCatalog = bookCatalogRepository.findByBookId(catalogChanged.getBookId());
-        if(catalogChanged.getEventType().equals("RENT_BOOK")) {
+    public BookCatalog updateBookStatus(BookChanged bookChanged) {
+        BookCatalog bookCatalog = bookCatalogRepository.findByBookId(bookChanged.getBookId());
+        if(bookChanged.getEventType().equals("RENT_BOOK")) {
             Long newCnt = bookCatalog.getRentCnt() + (long) 1;
             bookCatalog.setRentCnt(newCnt);
             bookCatalog.setRented(true);
             bookCatalog= bookCatalogRepository.save(bookCatalog);
-        }else if(catalogChanged.getEventType().equals("RETURN_BOOK")){
+        }else if(bookChanged.getEventType().equals("RETURN_BOOK")){
             bookCatalog.setRented(false);
             bookCatalog= bookCatalogRepository.save(bookCatalog);
 
@@ -130,35 +129,35 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     }
 
     @Override
-    public BookCatalog updateBookInfo(CatalogChanged catalogChanged) {
-        BookCatalog bookCatalog = bookCatalogRepository.findByBookId(catalogChanged.getBookId());
-        bookCatalog.setAuthor(catalogChanged.getAuthor());
-        bookCatalog.setClassification(catalogChanged.getClassification());
-        bookCatalog.setDescription(catalogChanged.getDescription());
-        bookCatalog.setPublicationDate(LocalDate.parse(catalogChanged.getPublicationDate(), fmt));
-        bookCatalog.setRented(catalogChanged.getRented());
-        bookCatalog.setTitle(catalogChanged.getTitle());
-        bookCatalog.setRentCnt(catalogChanged.getRentCnt());
+    public BookCatalog updateBookInfo(BookChanged bookChanged) {
+        BookCatalog bookCatalog = bookCatalogRepository.findByBookId(bookChanged.getBookId());
+        bookCatalog.setAuthor(bookChanged.getAuthor());
+        bookCatalog.setClassification(bookChanged.getClassification());
+        bookCatalog.setDescription(bookChanged.getDescription());
+        bookCatalog.setPublicationDate(LocalDate.parse(bookChanged.getPublicationDate(), fmt));
+        bookCatalog.setRented(bookChanged.getRented());
+        bookCatalog.setTitle(bookChanged.getTitle());
+        bookCatalog.setRentCnt(bookChanged.getRentCnt());
         bookCatalogRepository.save(bookCatalog);
         return bookCatalog;
     }
 
     @Override
-    public void processCatalogChanged(CatalogChanged catalogChanged) {
-        String eventType  = catalogChanged.getEventType();
+    public void processCatalogChanged(BookChanged bookChanged) {
+        String eventType  = bookChanged.getEventType();
         switch (eventType) {
             case "NEW_BOOK":
-               registerNewBook(catalogChanged);
+               registerNewBook(bookChanged);
                 break;
             case "DELETE_BOOK":
-                deleteBook(catalogChanged);
+                deleteBook(bookChanged);
                 break;
             case "RENT_BOOK":
             case "RETURN_BOOK":
-                updateBookStatus(catalogChanged);
+                updateBookStatus(bookChanged);
                 break;
             case "UPDATE_BOOK":
-                updateBookInfo(catalogChanged);
+                updateBookInfo(bookChanged);
                 break;
         }
     }

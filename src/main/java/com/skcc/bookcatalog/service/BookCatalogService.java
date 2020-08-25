@@ -1,8 +1,7 @@
 package com.skcc.bookcatalog.service;
 
 import com.skcc.bookcatalog.domain.BookCatalog;
-import com.skcc.bookcatalog.domain.CatalogChanged;
-import com.skcc.bookcatalog.web.rest.dto.BookCatalogDTO;
+import com.skcc.bookcatalog.domain.BookChanged;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,13 +47,18 @@ public interface BookCatalogService {
     void delete(String id);
 
     Page<BookCatalog> findBookByTitle(String title, Pageable pageable);
+    //kafka 이벤트 종류별 카테고라이징 처리
+    void processCatalogChanged(BookChanged bookChanged);
+    //신규 도서 등록
+    BookCatalog registerNewBook(BookChanged bookChanged);
+    //도서 삭제
+    void deleteBook(BookChanged bookChanged);
+    //도서 상태 수정
+    BookCatalog updateBookStatus(BookChanged bookChanged);
+    //도서 정보 수정
+    BookCatalog updateBookInfo(BookChanged bookChanged);
 
-    BookCatalog registerNewBook(CatalogChanged catalogChanged);
-    void deleteBook(CatalogChanged catalogChanged);
-    BookCatalog updateBookStatus(CatalogChanged catalogChanged);
-    BookCatalog updateBookInfo(CatalogChanged catalogChanged);
 
-    void processCatalogChanged(CatalogChanged catalogChanged);
 
     List<BookCatalog> loadTop10();
 }

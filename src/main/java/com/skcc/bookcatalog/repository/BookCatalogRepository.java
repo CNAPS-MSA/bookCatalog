@@ -16,6 +16,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface BookCatalogRepository extends MongoRepository<BookCatalog, String> {
+
     Page<BookCatalog> findByTitleContaining(String title, Pageable pageable);
 
     BookCatalog findByBookId(Long bookId);

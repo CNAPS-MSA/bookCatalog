@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class CatalogChanged {
+public class BookChanged {
 
     private String title;
 

@@ -2,7 +2,7 @@ package com.skcc.bookcatalog.adaptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skcc.bookcatalog.config.KafkaProperties;
-import com.skcc.bookcatalog.domain.CatalogChanged;
+import com.skcc.bookcatalog.domain.BookChanged;
 import com.skcc.bookcatalog.repository.BookCatalogRepository;
 import com.skcc.bookcatalog.service.BookCatalogService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -66,8 +66,8 @@ public class BookCatalogConsumer {
                         for(ConsumerRecord<String, String> record: records){
                             log.info("Consumed message in {} : {}", TOPIC, record.value());
                             ObjectMapper objectMapper = new ObjectMapper();
-                            CatalogChanged catalogChanged = objectMapper.readValue(record.value(), CatalogChanged.class);
-                            bookCatalogService.processCatalogChanged(catalogChanged);
+                            BookChanged bookChanged = objectMapper.readValue(record.value(), BookChanged.class);
+                            bookCatalogService.processCatalogChanged(bookChanged);
                         }
 
                     }
