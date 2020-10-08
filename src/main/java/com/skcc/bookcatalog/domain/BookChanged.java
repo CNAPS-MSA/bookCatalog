@@ -33,4 +33,5 @@ public class BookChanged {
 
     private Long bookId;
 
-    }
+
+}

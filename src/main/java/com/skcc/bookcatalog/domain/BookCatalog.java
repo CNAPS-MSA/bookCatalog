@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * A BookCatalog.
@@ -118,6 +119,41 @@ public class BookCatalog implements Serializable {
     @Override
     public int hashCode() {
         return 31;
+    }
+
+    public static BookCatalog registerNewBookCatalog(BookChanged bookChanged){
+        BookCatalog bookCatalog = new BookCatalog();
+        bookCatalog.setBookId(bookChanged.getBookId());
+        bookCatalog.setAuthor(bookChanged.getAuthor());
+        bookCatalog.setClassification(bookChanged.getClassification());
+        bookCatalog.setDescription(bookChanged.getDescription());
+        bookCatalog.setPublicationDate(LocalDate.parse(bookChanged.getPublicationDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        bookCatalog.setRented(bookChanged.getRented());
+        bookCatalog.setTitle(bookChanged.getTitle());
+        bookCatalog.setRentCnt(bookChanged.getRentCnt());
+        return bookCatalog;
+    }
+
+    public BookCatalog rentBook(){
+        this.setRentCnt(this.getRentCnt()+(long)1);
+        this.setRented(true);
+        return this;
+    }
+
+    public BookCatalog returnBook(){
+        this.setRented(false);
+        return this;
+    }
+
+    public BookCatalog updateBookCatalogInfo(BookChanged bookChanged){
+        this.setAuthor(bookChanged.getAuthor());
+        this.setClassification(bookChanged.getClassification());
+        this.setDescription(bookChanged.getDescription());
+        this.setPublicationDate(LocalDate.parse(bookChanged.getPublicationDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        this.setRented(bookChanged.getRented());
+        this.setTitle(bookChanged.getTitle());
+        this.setRentCnt(bookChanged.getRentCnt());
+        return this;
     }
 
 }

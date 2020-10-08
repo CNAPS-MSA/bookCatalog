@@ -28,7 +28,7 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     private final BookCatalogRepository bookCatalogRepository;
 
     private final BookCatalogMapper bookCatalogMapper;
-    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    //private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public BookCatalogServiceImpl(BookCatalogRepository bookCatalogRepository, BookCatalogMapper bookCatalogMapper) {
         this.bookCatalogRepository = bookCatalogRepository;
@@ -92,16 +92,7 @@ public class BookCatalogServiceImpl implements BookCatalogService {
 
     @Override
     public BookCatalog registerNewBook(BookChanged bookChanged) {
-        System.out.println("register new book");
-        BookCatalog bookCatalog = new BookCatalog();
-        bookCatalog.setBookId(bookChanged.getBookId());
-        bookCatalog.setAuthor(bookChanged.getAuthor());
-        bookCatalog.setClassification(bookChanged.getClassification());
-        bookCatalog.setDescription(bookChanged.getDescription());
-        bookCatalog.setPublicationDate(LocalDate.parse(bookChanged.getPublicationDate(), fmt));
-        bookCatalog.setRented(bookChanged.getRented());
-        bookCatalog.setTitle(bookChanged.getTitle());
-        bookCatalog.setRentCnt(bookChanged.getRentCnt());
+        BookCatalog bookCatalog = BookCatalog.registerNewBookCatalog(bookChanged);
         bookCatalog= bookCatalogRepository.save(bookCatalog);
         return bookCatalog;
     }
@@ -115,15 +106,13 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     public BookCatalog updateBookStatus(BookChanged bookChanged) {
         BookCatalog bookCatalog = bookCatalogRepository.findByBookId(bookChanged.getBookId());
         if(bookChanged.getEventType().equals("RENT_BOOK")) {
-            Long newCnt = bookCatalog.getRentCnt() + (long) 1;
-            bookCatalog.setRentCnt(newCnt);
-            bookCatalog.setRented(true);
-            bookCatalog= bookCatalogRepository.save(bookCatalog);
+            bookCatalog= bookCatalog.rentBook();
+
         }else if(bookChanged.getEventType().equals("RETURN_BOOK")){
-            bookCatalog.setRented(false);
-            bookCatalog= bookCatalogRepository.save(bookCatalog);
+            bookCatalog= bookCatalog.returnBook();
 
         }
+        bookCatalog= bookCatalogRepository.save(bookCatalog);
         return bookCatalog;
 
     }
@@ -131,14 +120,8 @@ public class BookCatalogServiceImpl implements BookCatalogService {
     @Override
     public BookCatalog updateBookInfo(BookChanged bookChanged) {
         BookCatalog bookCatalog = bookCatalogRepository.findByBookId(bookChanged.getBookId());
-        bookCatalog.setAuthor(bookChanged.getAuthor());
-        bookCatalog.setClassification(bookChanged.getClassification());
-        bookCatalog.setDescription(bookChanged.getDescription());
-        bookCatalog.setPublicationDate(LocalDate.parse(bookChanged.getPublicationDate(), fmt));
-        bookCatalog.setRented(bookChanged.getRented());
-        bookCatalog.setTitle(bookChanged.getTitle());
-        bookCatalog.setRentCnt(bookChanged.getRentCnt());
-        bookCatalogRepository.save(bookCatalog);
+        bookCatalog = bookCatalog.updateBookCatalogInfo(bookChanged);
+        bookCatalog= bookCatalogRepository.save(bookCatalog);
         return bookCatalog;
     }
 
