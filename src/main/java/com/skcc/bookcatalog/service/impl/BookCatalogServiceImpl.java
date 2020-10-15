@@ -90,20 +90,20 @@ public class BookCatalogServiceImpl implements BookCatalogService {
         return bookCatalogRepository.findByTitleContaining(title, pageable);
     }
 
-    @Override
-    public BookCatalog registerNewBook(BookChanged bookChanged) {
+
+    private BookCatalog registerNewBook(BookChanged bookChanged) {
         BookCatalog bookCatalog = BookCatalog.registerNewBookCatalog(bookChanged);
         bookCatalog= bookCatalogRepository.save(bookCatalog);
         return bookCatalog;
     }
 
-    @Override
-    public void deleteBook(BookChanged bookChanged) {
+
+    private void deleteBook(BookChanged bookChanged) {
         bookCatalogRepository.deleteByBookId(bookChanged.getBookId());
     }
 
-    @Override
-    public BookCatalog updateBookStatus(BookChanged bookChanged) {
+
+    private BookCatalog updateBookStatus(BookChanged bookChanged) {
         BookCatalog bookCatalog = bookCatalogRepository.findByBookId(bookChanged.getBookId());
         if(bookChanged.getEventType().equals("RENT_BOOK")) {
             bookCatalog= bookCatalog.rentBook();
@@ -117,8 +117,8 @@ public class BookCatalogServiceImpl implements BookCatalogService {
 
     }
 
-    @Override
-    public BookCatalog updateBookInfo(BookChanged bookChanged) {
+
+    private BookCatalog updateBookInfo(BookChanged bookChanged) {
         BookCatalog bookCatalog = bookCatalogRepository.findByBookId(bookChanged.getBookId());
         bookCatalog = bookCatalog.updateBookCatalogInfo(bookChanged);
         bookCatalog= bookCatalogRepository.save(bookCatalog);

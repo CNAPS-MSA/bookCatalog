@@ -49,14 +49,7 @@ public interface BookCatalogService {
     Page<BookCatalog> findBookByTitle(String title, Pageable pageable);
     //kafka 이벤트 종류별 카테고라이징 처리
     void processCatalogChanged(BookChanged bookChanged);
-    //신규 도서 등록
-    BookCatalog registerNewBook(BookChanged bookChanged);
-    //도서 삭제
-    void deleteBook(BookChanged bookChanged);
-    //도서 상태 수정
-    BookCatalog updateBookStatus(BookChanged bookChanged);
-    //도서 정보 수정
-    BookCatalog updateBookInfo(BookChanged bookChanged);
+
 
 
 
